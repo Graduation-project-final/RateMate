@@ -1,0 +1,185 @@
+.bg-img-about {
+  background-image: url(../../assets/images/hotel4.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 32rem;
+  width: 100%;
+}
+.black-opictiy {
+  background-color: rgb(0 0 0 / 0.25);
+  height: 100%;
+  width: 100%;
+}
+/*
+type pf contact
+*/
+.TypeofContact {
+  color: azure;
+  width: 80%;
+  text-align: center;
+  margin: 1rem auto;
+}
+.ContactContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.ContactContainer .ContactCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #374151;
+  margin: 2rem 0;
+  padding: 2rem 0;
+  transition: 0.7s ease;
+} */
+
+.ContactContainer .ContactCard .ContactText {
+  padding-left: 1rem;
+  color: white;
+  text-align: center;
+}
+.icon:hover {
+  transform: scale(1.1);
+  background-color: #374151;
+  color: #fff;
+}
+@media (max-width: 930px) {
+  .ContactContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+/*
+type pf contact
+*/
+/*
+FindBestHotel
+*/
+.bg-img-FindBestHotel {
+  background-image: url(../../assets/images/place.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  height: 15rem;
+  width: 100%;
+}
+.black-opictiy-100 {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+}
+.center-FindBestHotel {
+  width: 80%;
+  height: 100%;
+}
+.FindBestHotel-text .subheading {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 5px;
+  color: #060640;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.FindBestHotel-text h1 {
+  color: #fff;
+  font-weight: 400;
+  font-size: calc(1.375rem + 1.5vw);
+}
+.buttonBook {
+  background: #060640;
+  border: 1px solid #060640;
+  color: #fff;
+  display: inline-block;
+}
+
+/*
+FindBestHotel
+*/
+/*
+AboutSection
+*/
+.LLB-img,
+.LRT-img {
+  height: 200px;
+}
+.LLB-img img,
+.LRT-img img {
+  height: 100%;
+  border-radius: 5px;
+  width: 100%;
+}
+.LLT,
+.LLB,
+.LRT,
+.LRB,
+.LLB-img {
+  box-shadow: 0px 5px 25px -2px rgba(0, 0, 0, 0.06);
+}
+.LLT-Icon,
+.LRB-Icon {
+  color: #060640;
+}
+
+.R h5 {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 5px;
+  color: #060640;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.R h1 {
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+.formHeader {
+  font-family: "Quicksand", sans-serif;
+}
+.R p {
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 400;
+  color: #999999;
+  margin-bottom: 1rem;
+}
+
+.R a {
+  background: #060640;
+  border: 1px solid #060640;
+  color: #fff;
+  display: inline-block;
+  padding: 1.25rem 1rem;
+}
+@media (max-width: 900px) {
+  .AboutSection-80 {
+    display: flex;
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: center;
+    text-align: center;
+  }
+}
+@media (max-width: 640px) {
+  .AboutSection-80 {
+    display: flex;
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: center;
+    text-align: center;
+  }
+}
