@@ -734,7 +734,6 @@ const Navbar = () => {
                   )}
                 </AnimatePresence>
               </li>
-
               <div className="flex items-center cursor-pointer text-gray-700 hover:text-gray-900">
                 <NavLink
                   to="/category/list"
@@ -745,6 +744,18 @@ const Navbar = () => {
                   }
                 >
                   Category
+                </NavLink>
+              </div>{" "}
+              <div className="flex items-center cursor-pointer text-gray-700 hover:text-gray-900">
+                <NavLink
+                  to="/Product"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-gray-900 underline font-bold flex items-center"
+                      : "text-gray-700 flex items-center"
+                  }
+                >
+                  Product
                 </NavLink>
               </div>
             </ul>

@@ -41,6 +41,7 @@ const productUpload = (req, res, next) => {
     { name: "mainImage", maxCount: 1 },
     { name: "subImages", maxCount: 4 },
   ])(req, res, (err) => {
+    console.log("Files received:", req.files);
     if (err) {
       if (err instanceof multer.MulterError) {
         return res.status(400).json({

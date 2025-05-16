@@ -1,9 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { createProduct } = require("../controllers/productController");
+const {
+  createProduct,
+  getAllProducts,
+  approveProduct,
+} = require("../controllers/productController");
 const verifyToken = require("../middlewares/auth");
 const productUpload = require("../utils/productUpload");
 
 router.post("/products-create", verifyToken, productUpload, createProduct);
+router.get("/products", getAllProducts);
+router.put("/products/:id/approve", approveProduct);
 
 module.exports = router;
