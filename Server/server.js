@@ -16,6 +16,7 @@ const subscriptionRoutes = require("./routes/subscriptionRoutes");
 const businessAdminRoutes = require("./routes/businessAdminRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const reportRoutes = require("./routes/reportRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use("/api", subscriptionRoutes);
 app.use("/api/businessAdmin", businessAdminRoutes);
 app.use("/api", contactRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api", productRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

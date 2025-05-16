@@ -22,15 +22,19 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.ENUM("available", "unavailable", "archived"),
-        defaultValue: "available",
+        type: Sequelize.ENUM("pending", "rejected", "approved"),
+        defaultValue: "pending",
         allowNull: false,
       },
       mainImage: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      subImages: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
       },
-      subImage: {
+      productUrl: {
         type: Sequelize.STRING,
         allowNull: true,
       },

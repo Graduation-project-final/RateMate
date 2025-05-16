@@ -26,15 +26,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM("available", "unavailable", "archived"),
-        defaultValue: "available",
+        type: DataTypes.ENUM("pending", "rejected", "approved"),
+        defaultValue: "pending",
         allowNull: false,
       },
       mainImage: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      subImage: {
+      subImages: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+      },
+      productUrl: {
         type: DataTypes.STRING,
         allowNull: true,
       },
