@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "serviceId",
         as: "service",
       });
+      Report.belongsTo(models.Review, {
+        foreignKey: "reviewId",
+        as: "review",
+      });
     }
   }
 
@@ -24,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       serviceId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      reviewId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       description: {
         type: DataTypes.TEXT,

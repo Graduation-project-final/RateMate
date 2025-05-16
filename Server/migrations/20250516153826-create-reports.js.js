@@ -29,6 +29,16 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      reviewId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Reviews",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+      },
       description: {
         type: Sequelize.TEXT,
         allowNull: false,

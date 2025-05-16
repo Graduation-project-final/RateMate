@@ -37,6 +37,53 @@ const ListingDetailCategory = () => {
   const [replies, setReplies] = useState({});
   const [updatedReplyContent, setUpdatedReplyContent] = useState("");
   const [selectedReply, setSelectedReply] = useState(null);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reportDescription, setReportDescription] = useState("");
+  const [reviewToReport, setReviewToReport] = useState(null);
+
+  const handleOpenReportModal = (reviewId) => {
+    setReviewToReport(reviewId);
+    setIsReportModalOpen(true);
+  };
+
+  const handleCloseReportModal = () => {
+    setIsReportModalOpen(false);
+    setReportDescription("");
+    setReviewToReport(null);
+  };
+
+  const handleReportComment = async () => {
+    const token = localStorage.getItem("authToken");
+
+    if (!reportDescription.trim()) {
+      toast.error("Please enter a description for your report");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "http://localhost:4000/api/reports/comment-report",
+        {
+          serviceId: listingId,
+          description: reportDescription,
+          reviewId: reviewToReport,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success("Review reported successfully!");
+      handleCloseReportModal();
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Error reporting review.";
+      console.error("Error reporting review:", error);
+      toast.error(errorMessage);
+    }
+  };
 
   const handleEditReply = async (replyId) => {
     const token = localStorage.getItem("authToken");
@@ -78,7 +125,7 @@ const ListingDetailCategory = () => {
 
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "You won’t be able to revert this!",
+      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -243,7 +290,7 @@ const ListingDetailCategory = () => {
 
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "You won’t be able to revert this!",
+      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -470,6 +517,45 @@ const ListingDetailCategory = () => {
                     <Trash className="w-5 h-5 inline-block mr-1" />
                     Delete
                   </button>
+                  <button
+                    className="text-white bg-opacity-50 hover:bg-opacity-75 py-1 px-3 rounded-md transition-all"
+                    onClick={() => handleOpenReportModal(review.id)}
+                  >
+                    Report
+                  </button>
+
+                  {isReportModalOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+                      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+                        <h2 className="text-lg font-bold mb-4 text-black">
+                          Report Review
+                        </h2>
+                        <p className="mb-2 text-black">
+                          Please describe why you're reporting this review:
+                        </p>
+                        <textarea
+                          value={reportDescription}
+                          onChange={(e) => setReportDescription(e.target.value)}
+                          className="w-full h-32 border border-gray-300 rounded-md p-2 mb-4 text-black"
+                          placeholder="Enter your report description..."
+                        />
+                        <div className="flex justify-end">
+                          <button
+                            className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 mr-2"
+                            onClick={handleReportComment}
+                          >
+                            Submit Report
+                          </button>
+                          <button
+                            className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400"
+                            onClick={handleCloseReportModal}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -555,6 +641,12 @@ const ListingDetailCategory = () => {
                             onClick={() => handleDeleteReply(reply.id)}
                           >
                             Delete
+                          </button>
+                          <button
+                            className="text-red-600 hover:underline"
+                            onClick={() => handleReportComment(review.id)}
+                          >
+                            Report
                           </button>
                         </div>
                       </div>
