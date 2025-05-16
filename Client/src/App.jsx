@@ -37,6 +37,7 @@ import { CartProvider } from "./hooks/CartContext";
 import SetNewPassword from "./pages/SetNewPassword";
 import Product from "./pages/Product";
 import AddProduct from "./pages/AddProduct";
+import ProductDetails from "./pages/ProductDetails";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -109,6 +110,7 @@ const App = () => {
             <Route path="/BlogPage" element={<BlogPage />} />
             <Route path="/product" element={<Product />} />
             <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/productDetails/:id" element={<ProductDetails />} />
 
             {/* <Route path="/EC" element={<App2 />} /> */}
             {/* <Route path="/shop" element={<App3 />} /> */}

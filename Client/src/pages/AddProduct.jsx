@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Camera, Link, FileText, Box, Upload, Loader, Tag } from "lucide-react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -60,7 +63,9 @@ const AddProduct = () => {
       data.append("category", formData.category);
       data.append("description", formData.description);
       data.append("productUrl", formData.productUrl);
-      data.append("mainImage", formData.mainImage);
+      if (formData.mainImage) {
+        data.append("mainImage", formData.mainImage);
+      }
 
       formData.subImages.forEach((image) => {
         data.append(`subImages`, image);
@@ -77,12 +82,35 @@ const AddProduct = () => {
         }
       );
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create product");
+        // Check if message contains the string (not exact match)
+        if (
+          responseData.message.includes("You can only create up to 2 products")
+        ) {
+          const result = await Swal.fire({
+            title: "Product Limit Reached",
+            text: "You've reached your product limit (2 products). Upgrade to a Business Account to add unlimited products.",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonText: "Upgrade Now",
+            cancelButtonText: "Maybe Later",
+            confirmButtonColor: "#060640",
+            cancelButtonColor: "#6c757d",
+            background: "#ffffff",
+            reverseButtons: true,
+          });
+
+          if (result.isConfirmed) {
+            navigate("/PricingPage");
+          }
+          return;
+        }
+        throw new Error(responseData.message || "Failed to create product");
       }
 
-      Swal.fire({
+      await Swal.fire({
         title: "Success!",
         text: "Product created successfully!",
         icon: "success",
@@ -90,6 +118,7 @@ const AddProduct = () => {
         background: "#ffffff",
       });
 
+      // Reset form
       setFormData({
         title: "",
         category: "",
@@ -99,13 +128,16 @@ const AddProduct = () => {
         subImages: [],
       });
     } catch (err) {
-      Swal.fire({
-        title: "Error!",
-        text: err.message,
-        icon: "error",
-        confirmButtonColor: "#060640",
-        background: "#ffffff",
-      });
+      console.error("API Error:", err);
+      if (!err.message.includes("You can only create up to 2 products")) {
+        await Swal.fire({
+          title: "Error!",
+          text: err.message,
+          icon: "error",
+          confirmButtonColor: "#060640",
+          background: "#ffffff",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

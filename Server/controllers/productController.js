@@ -99,4 +99,54 @@ const approveProduct = async (req, res) => {
   }
 };
 
-module.exports = { createProduct, getAllProducts, approveProduct };
+const getApprovedProducts = async (req, res) => {
+  try {
+    const approvedProducts = await Product.findAll({
+      where: { status: "approved" },
+    });
+
+    res.status(200).json({
+      message: "Approved products retrieved successfully",
+      products: approvedProducts,
+    });
+  } catch (error) {
+    console.error("Error fetching approved products:", error);
+    res.status(500).json({
+      message: "Error retrieving approved products",
+      error: error.message,
+    });
+  }
+};
+
+const getApprovedProductById = async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    const product = await Product.findOne({
+      where: { id: productId, status: "approved" },
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: "Approved product not found" });
+    }
+
+    res.status(200).json({
+      message: "Approved product retrieved successfully",
+      product,
+    });
+  } catch (error) {
+    console.error("Error fetching approved product by ID:", error);
+    res.status(500).json({
+      message: "Error retrieving approved product",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  createProduct,
+  getAllProducts,
+  approveProduct,
+  getApprovedProducts,
+  getApprovedProductById,
+};
