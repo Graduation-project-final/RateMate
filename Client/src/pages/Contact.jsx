@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { ImLocation } from "react-icons/im";
-import { IoMdMail } from "react-icons/io";
-import { BsFillTelephoneFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { AiOutlineRight } from "react-icons/ai";
-import contactHero from "../assets/images/contactHero.png";
+import {
+  MapPin,
+  Mail,
+  Phone,
+  Send,
+  User,
+  MessageSquare,
+  ChevronRight,
+  Contact2,
+} from "lucide-react";
 
 function Contact() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userMessage, setUserMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [contact, setContact] = useState({
     name: "",
@@ -24,8 +30,8 @@ function Contact() {
       try {
         const response = await axios.get("http://localhost:4000/api/contacts");
         if (response.data && response.data.length > 0) {
-          // Assuming you get an array of contacts, pick the first one (or customize based on your data structure)
-          const contactData = response.data[0]; // If you expect only one contact
+          // Assuming you get an array of contacts, pick the first one
+          const contactData = response.data[0];
           setContact({
             name: contactData.name,
             email: contactData.email,
@@ -42,6 +48,7 @@ function Contact() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const payload = {
       name: userName,
@@ -82,942 +89,176 @@ function Contact() {
         title: "Oops...",
         text: "Something went wrong! Please try again.",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
-    <div>
+    <div className="bg-gray-50">
+      {/* Hero Section with Overlay Gradient */}
       <div
-        className="bg-cover bg-center h-screen bg-fixed"
+        className="relative h-64 bg-cover bg-center"
         style={{
           backgroundImage: `url(../src/assets/images/contact.jpg)`,
-          height: "20rem",
         }}
       >
-        <div className="flex items-center justify-center h-full bg-[#060640] bg-opacity-50">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">
-              Get in touch with us
-            </h1>
-            <nav className="text-white mb-8">
-              <ol className="list-none p-0 inline-flex">
-                <li className="flex items-center">
-                  <Link
-                    to="/"
-                    className="text-[#060640] hover:text-white hover:underline transition"
-                  >
-                    Home
-                  </Link>
-                  <span className="mx-2">
-                    <AiOutlineRight />
-                  </span>
-                </li>
-                <li>Contact Us</li>
-              </ol>
-            </nav>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#060640] to-transparent opacity-80"></div>
+        <div className="relative h-full flex flex-col justify-center px-8 max-w-screen-xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Contact Us
+          </h1>
+          <nav className="flex items-center text-white text-sm">
+            <Link to="/" className="flex items-center hover:underline">
+              Home
+              <ChevronRight size={16} className="mx-1" />
+            </Link>
+            <span>Contact Us</span>
+          </nav>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-screen-xl mx-auto px-4 py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left side - Contact Info Card */}
+          <div className="relative overflow-hidden rounded-2xl shadow-xl">
+            <div className="absolute inset-0 bg-[#060640] opacity-90 z-0"></div>
+            <div className="relative z-10 p-8 md:p-12 text-white">
+              <div className="flex items-center mb-6">
+                <Contact2 size={32} className="mr-3" />
+                <h2 className="text-2xl md:text-3xl font-bold">Get in Touch</h2>
+              </div>
+
+              <p className="mb-10 text-gray-200">
+                Have questions or need assistance? We're here to help! Reach out
+                to us using any of the contact methods below.
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex items-start">
+                  <div className="bg-white/10 p-3 rounded-full mr-4">
+                    <MapPin size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-lg">Our Location</h3>
+                    <p className="text-gray-200 mt-1">
+                      {contact.name || "Location not available"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="bg-white/10 p-3 rounded-full mr-4">
+                    <Phone size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-lg">Phone Number</h3>
+                    <a
+                      href={`tel://${contact.phone_number}`}
+                      className="text-gray-200 mt-1 block hover:text-white hover:underline transition"
+                    >
+                      {contact.phone_number || "Phone number not available"}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="bg-white/10 p-3 rounded-full mr-4">
+                    <Mail size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-lg">Email Address</h3>
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="text-gray-200 mt-1 block hover:text-white hover:underline transition"
+                    >
+                      {contact.email || "Email not available"}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full"></div>
+              <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/5 rounded-full"></div>
+            </div>
+          </div>
+
+          {/* Right side - Contact Form */}
+          <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+            <h3 className="text-2xl font-bold text-[#060640] mb-6">
+              Send Us a Message
+            </h3>
+            <p className="text-gray-600 mb-8">
+              We'd love to hear from you! Fill out the form below and we'll get
+              back to you as soon as possible.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User size={18} className="text-gray-400" />
+                </div>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full pl-10 pr-4 py-3 rounded-lg text-[#060640] border border-gray-300 focus:border-[#060640] focus:ring-1 focus:ring-[#060640] outline-none transition-all"
+                  onChange={(event) => setUserName(event.target.value)}
+                  value={userName}
+                  required
+                />
+              </div>
+
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Mail size={18} className="text-gray-400" />
+                </div>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Your Email Address"
+                  className="w-full pl-10 pr-4 py-3 rounded-lg text-[#060640] border border-gray-300 focus:border-[#060640] focus:ring-1 focus:ring-[#060640] outline-none transition-all"
+                  onChange={(event) => setUserEmail(event.target.value)}
+                  value={userEmail}
+                  required
+                />
+              </div>
+
+              <div className="relative">
+                <div className="absolute top-3 left-3 pointer-events-none">
+                  <MessageSquare size={18} className="text-gray-400" />
+                </div>
+                <textarea
+                  id="message"
+                  rows={5}
+                  placeholder="Your Message"
+                  className="w-full pl-10 pr-4 py-3 rounded-lg text-[#060640] border border-gray-300 focus:border-[#060640] focus:ring-1 focus:ring-[#060640] outline-none transition-all"
+                  onChange={(event) => setUserMessage(event.target.value)}
+                  value={userMessage}
+                  required
+                />
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="flex items-center justify-center w-full rounded-lg bg-[#060640] px-6 py-3 text-white font-medium transition-all hover:bg-[#0a0a60] hover:shadow-lg disabled:opacity-70"
+                >
+                  {isLoading ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send Message <Send size={18} className="ml-2" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-      <section className="relative z-10 overflow-hidden py-28">
-        <div className="flex flex-wrap lg:justify-between max-w-screen-xl mx-auto px-4 md:px-8">
-          <div className="w-full lg:w-1/2 xl:w-6/12">
-            <div className="mb-8 lg:mb-0">
-              <h2 className="mb-6 text-[#060640] sm:text-[40px]">
-                Get in touch with us
-              </h2>
-              <h4 className="mb-8">
-                If you have any questions or feel confused about something, do
-                not hesitate and contact us now...we are here for you
-              </h4>
-              <div className="mb-8 flex w-full max-w-[370px]">
-                <div className="flex w-full items-center overflow-hidden sm:max-w-[70px]">
-                  <ImLocation className="w-7 h-7" />
-                </div>
-                <div className="w-full">
-                  <p className="pt-5 text-base hover:text-[#060640c6] transition cursor-default">
-                    {contact.name || "Phone number not available"}
-                  </p>
-                </div>
-              </div>
-
-              {/* Dynamic phone number from API */}
-              <a href={`tel://${contact.phone_number}`}>
-                <div className="mb-8 flex w-full max-w-[370px]">
-                  <div className="flex w-full items-center overflow-hidden sm:max-w-[70px]">
-                    <BsFillTelephoneFill className="w-7 h-7" />
-                  </div>
-                  <div className="w-full">
-                    <p className="pt-5 text-base hover:text-[#060640c6] hover:underline transition">
-                      {contact.phone_number || "Phone number not available"}
-                    </p>
-                  </div>
-                </div>
-              </a>
-
-              {/* Dynamic email from API */}
-              <a href={`mailto:${contact.email}`}>
-                <div className="mb-8 flex w-full max-w-[370px]">
-                  <div className="flex w-full items-center overflow-hidden sm:max-w-[70px]">
-                    <IoMdMail className="w-7 h-7" />
-                  </div>
-                  <div className="w-full">
-                    <p className="pt-5 text-base hover:text-[#060640c6] hover:underline transition">
-                      {contact.email || "Email not available"}
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div className="w-full lg:w-1/2 xl:w-5/12 bg-white">
-            <div className="relative rounded-lg p-8 border border-[#060640] sm:p-12">
-              <form onSubmit={handleSubmit} method="post">
-                <div className="mb-6">
-                  <label htmlFor="name">
-                    Name <span className="text-red-700 text-xl">*</span>
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    placeholder="Your Name"
-                    className="w-full py-3 px-[14px] mt-2 rounded-lg text-[#060640] border border-black focus:border-[#060640] focus:ring-0 outline-none"
-                    onChange={(event) => setUserName(event.target.value)}
-                    value={userName}
-                    required
-                  />
-                </div>
-                <div className="mb-6">
-                  <label htmlFor="email">
-                    Email <span className="text-red-700 text-xl">*</span>
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Your Email"
-                    className="w-full py-3 px-[14px] mt-2 rounded-lg text-[#060640] border border-black focus:border-[#060640] focus:ring-0 outline-none"
-                    onChange={(event) => setUserEmail(event.target.value)}
-                    value={userEmail}
-                    required
-                  />
-                </div>
-                <div className="mb-6">
-                  <label htmlFor="message">
-                    Message <span className="text-red-700 text-xl">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={6}
-                    placeholder="Your Message"
-                    className="w-full py-3 px-[14px] mt-2 rounded-lg text-[#060640] border border-black focus:border-[#060640] focus:ring-0 outline-none"
-                    onChange={(event) => setUserMessage(event.target.value)}
-                    value={userMessage}
-                    required
-                  />
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    className="w-1/2 rounded-lg border border-current px-6 py-2 md:text-sm font-normal border-[#060640] hover:border-[#060640] text-[#060640] transition hover:rotate-2 hover:scale-110 hover:bg-[#060640] hover:text-[#fefefe] hover:shadow-lg hover:shadow-[#060640]"
-                  >
-                    Send
-                  </button>
-                </div>
-              </form>
-              <div>
-                <span className="absolute -right-10 top-[90px] z-[-1]">
-                  <svg
-                    width={34}
-                    height={134}
-                    viewBox="0 0 34 134"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="31.9993"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 1.66665)"
-                      fill="#3b82f6"
-                    />
-                  </svg>
-                </span>
-                <span className="absolute -left-7 -bottom-7 z-[-1]">
-                  <svg
-                    width={107}
-                    height={134}
-                    viewBox="0 0 107 134"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="104.999"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 104.999 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 104.999 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 104.999 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 104.999 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 104.999 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 104.999 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 104.999 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 104.999 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 104.999 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="104.999"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 104.999 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 90.3333 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 90.3333 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 90.3333 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 90.3333 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 90.3333 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 90.3333 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 90.3333 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 90.3333 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 90.3333 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="90.3333"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 90.3333 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 75.6654 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 75.6654 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 75.6654 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 75.6654 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 75.6654 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 75.6654 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 75.6654 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 75.6654 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 31.9993 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 75.6654 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="75.6654"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 75.6654 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="31.9993"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 31.9993 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 60.9993 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 60.9993 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 60.9993 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 60.9993 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 60.9993 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 60.9993 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 60.9993 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 60.9993 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 17.3333 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 60.9993 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="60.9993"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 60.9993 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="17.3333"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 17.3333 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 46.3333 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={132}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 132)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 46.3333 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="117.333"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 117.333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 46.3333 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="102.667"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 102.667)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 46.3333 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={88}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 88)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 46.3333 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="73.3333"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 73.3333)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 46.3333 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={45}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 45)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 46.3333 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={16}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 16)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 46.3333 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy={59}
-                      r="1.66667"
-                      transform="rotate(180 2.66536 59)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 46.3333 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="30.6666"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 30.6666)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="46.3333"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 46.3333 1.66665)"
-                      fill="#3b82f6"
-                    />
-                    <circle
-                      cx="2.66536"
-                      cy="1.66665"
-                      r="1.66667"
-                      transform="rotate(180 2.66536 1.66665)"
-                      fill="#3b82f6"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

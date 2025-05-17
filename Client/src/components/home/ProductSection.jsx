@@ -57,81 +57,86 @@ const ProductSection = () => {
   }
 
   return (
-    <div className="pt-[1rem] mt-16 px-4 sm:px-8 lg:pt-16 xl:px-40">
-      <div className="flex flex-col sm:flex-row sm:justify-between items-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-[#060640]">
-          Top Products
-        </h2>
-        <Link
-          to="/Product"
-          className="flex items-center text-[#515161] hover:text-[#060640] hover:underline mt-4 sm:mt-0 transition-colors duration-300"
-        >
-          <span className="mr-2 font-medium">See all products</span>
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+    <>
+      {" "}
+      <div className="pt-[1rem] mt-4 px-4 sm:px-8 lg:pt-16 xl:px-40">
+        <div className="flex flex-col sm:flex-row sm:justify-between items-center">
+          <h2 className="text-lg sm:text-xl mr-4 font-semibold text-[#060640]">
+            Top Products
+          </h2>
+          <Link
+            to="product"
+            className="flex items-center text-gray-600 hover:underline mt-4 sm:mt-0"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </Link>
-      </div>
-
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((product) => (
-          <motion.div
-            key={product.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-          >
-            <div className="relative h-64 overflow-hidden">
-              <img
-                src={product.mainImage}
-                alt={product.title}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                onError={(e) => {
-                  e.target.src =
-                    "https://via.placeholder.com/400x300?text=Product+Image";
-                }}
+            <span className="mr-2 text-[#515161]">See all resources</span>
+            <svg
+              className="w-4 h-4 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
               />
-            </div>
-            <div className="p-6">
-              <div className="flex justify-between items-start">
-                <h3 className="text-xl font-bold text-[#060640]">
-                  {product.title}
-                </h3>
-                <span className="px-3 py-1 bg-[#F0F0F5] text-[#060640] text-xs font-semibold rounded-full">
-                  {product.category}
-                </span>
-              </div>
-              <p className="text-gray-600 mt-3 line-clamp-2">
-                {product.description}
-              </p>
-              <div className="mt-6 flex justify-between items-center">
-                <span className="text-sm text-gray-500">
-                  Added: {new Date(product.createdAt).toLocaleDateString()}
-                </span>
-                <Link
-                  to={`/productDetails/${product.id}`}
-                  className="px-4 py-2 bg-[#060640] text-white text-sm font-medium rounded-full hover:bg-[#0a0a5a] transition-colors duration-300"
-                >
-                  View Details
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+            </svg>
+          </Link>
+        </div>
+        <hr className="my-4 border-[#FADED9] border-[2px]" />
       </div>
-    </div>
+      <div className="pt-[1rem] px-4 sm:px-8  xl:px-40">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {products.map((product) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="relative h-64 overflow-hidden">
+                <img
+                  src={product.mainImage}
+                  alt={product.title}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://via.placeholder.com/400x300?text=Product+Image";
+                  }}
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-xl font-bold text-[#060640]">
+                    {product.title}
+                  </h3>
+                  <span className="px-3 py-1 bg-[#F0F0F5] text-[#060640] text-xs font-semibold rounded-full">
+                    {product.category}
+                  </span>
+                </div>
+                <p className="text-gray-600 mt-3 line-clamp-2">
+                  {product.description}
+                </p>
+                <div className="mt-6 flex justify-between items-center">
+                  <span className="text-sm text-gray-500">
+                    Added: {new Date(product.createdAt).toLocaleDateString()}
+                  </span>
+                  <Link
+                    to={`/productDetails/${product.id}`}
+                    className="px-4 py-2 bg-[#060640] text-white text-sm font-medium rounded-full hover:bg-[#0a0a5a] transition-colors duration-300"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 

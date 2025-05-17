@@ -7,11 +7,11 @@ const createProduct = async (req, res) => {
 
     const productCount = await Product.count({ where: { userId } });
 
-    if (productCount >= 2) {
-      return res.status(403).json({
-        message: "You can only create up to 2 products.",
-      });
-    }
+    // if (productCount >= 2) {
+    //   return res.status(403).json({
+    //     message: "You can only create up to 2 products.",
+    //   });
+    // }
 
     if (!req.files || !req.files.mainImage) {
       return res.status(400).json({ message: "Main image is required" });
