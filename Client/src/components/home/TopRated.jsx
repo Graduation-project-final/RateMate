@@ -184,19 +184,7 @@ const TopRated = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-      <div className="pt-[1rem] mt-16 px-4 sm:px-8 lg:pt-16 xl:px-40">
+      <div className="pt-[1rem]  px-4 sm:px-8 lg:pt-16 xl:px-40">
         <div className="flex flex-col sm:flex-row sm:justify-between items-center">
           <h2 className="text-lg sm:text-xl mr-4 font-semibold text-[#060640]">
             Top Rated
@@ -222,6 +210,21 @@ const TopRated = () => {
             </svg>
           </Link>
         </div>
+        <hr className="my-4 border-[#FADED9] border-[2px]" />
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <div className="pt-[1rem]  px-4 sm:px-8 lg:pt-8 xl:px-40">
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {currentCards.length > 0 ? (
             currentCards.map((card) => (

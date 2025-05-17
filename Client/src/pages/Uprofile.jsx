@@ -262,7 +262,7 @@ const ProfilePage = () => {
               profileData.coverPhoto ||
               "/default-cover.jpg"
             }
-            alt="Cover"
+            // alt="Cover"
             onError={(e) => {
               e.target.src = "/default-cover.jpg";
             }}
@@ -291,7 +291,7 @@ const ProfilePage = () => {
                     profileData.profilePhoto ||
                     "/default-profile.png"
                   }
-                  alt="Profile"
+                  // alt="Profile"
                   onError={(e) => {
                     e.target.src = "/default-profile.png";
                   }}
@@ -594,7 +594,7 @@ const ProfilePage = () => {
                           profileData.profilePhoto ||
                           "/default-profile.png"
                         }
-                        alt="Profile Preview"
+                        // alt="Profile Preview"
                         className={`w-16 h-16 rounded-full object-cover transition-opacity duration-300 ${
                           isImageLoading.profile ? "opacity-50" : "opacity-100"
                         }`}
@@ -635,7 +635,7 @@ const ProfilePage = () => {
                           profileData.coverPhoto ||
                           "/default-cover.jpg"
                         }
-                        alt="Cover Preview"
+                        // alt="Cover Preview"
                         className={`w-24 h-16 rounded-md object-cover transition-opacity duration-300 ${
                           isImageLoading.cover ? "opacity-50" : "opacity-100"
                         }`}

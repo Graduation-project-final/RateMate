@@ -58,7 +58,7 @@ const Category = ({ services }) => {
         Top Rated Services
       </h1>
       {/* Services */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 py-6 lg:px-32">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6 lg:px-32">
         {currentServices.map((service) => (
           <ServiceCard key={service.id} service={service} />
         ))}

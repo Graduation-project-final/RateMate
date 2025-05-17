@@ -3,21 +3,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../hooks/AuthContext";
+import { Mail, Lock, RotateCw, ArrowRight, ChevronLeft } from "lucide-react";
 
 const VerifyEmailOTPPage = () => {
   const { email } = useParams();
-  const [otp, setOtp] = useState(Array(6).fill("")); // Array to store 6 OTP digits
+  const [otp, setOtp] = useState(Array(6).fill(""));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
   const [timer, setTimer] = useState(60);
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Handle OTP input change and backspace
   const handleOtpChange = (index, value, event) => {
     const newOtp = [...otp];
 
-    // Handle backspace
     if (event.key === "Backspace" && !value) {
       if (index > 0) {
         newOtp[index - 1] = "";
@@ -25,18 +24,15 @@ const VerifyEmailOTPPage = () => {
         document.getElementById(`otp-${index - 1}`).focus();
       }
     } else if (/^\d*$/.test(value) && value.length <= 1) {
-      // Handle normal input
       newOtp[index] = value;
       setOtp(newOtp);
 
-      // Auto-focus to the next input if a number is entered
       if (value && index < 5) {
         document.getElementById(`otp-${index + 1}`).focus();
       }
     }
   };
 
-  // Handle OTP verification
   const handleVerifyClick = async () => {
     const otpString = otp.join("");
     if (otpString.length !== 6) {
@@ -52,10 +48,7 @@ const VerifyEmailOTPPage = () => {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/auth/verify-otp",
-        {
-          email,
-          otp: otpString,
-        }
+        { email, otp: otpString }
       );
 
       const token = response.data.token;
@@ -69,11 +62,6 @@ const VerifyEmailOTPPage = () => {
         navigate("/uprofile");
       });
     } catch (error) {
-      console.error(
-        "Error verifying OTP:",
-        error.response ? error.response.data : error
-      );
-
       Swal.fire({
         icon: "error",
         title: "Verification Failed",
@@ -84,7 +72,6 @@ const VerifyEmailOTPPage = () => {
     }
   };
 
-  // Handle OTP resend
   const handleResendOtp = async () => {
     try {
       const response = await axios.post(
@@ -100,11 +87,6 @@ const VerifyEmailOTPPage = () => {
       setTimer(60);
       setIsResendDisabled(true);
     } catch (error) {
-      console.error(
-        "Error resending OTP:",
-        error.response ? error.response.data : error
-      );
-
       Swal.fire({
         icon: "error",
         title: "Resend Failed",
@@ -113,7 +95,6 @@ const VerifyEmailOTPPage = () => {
     }
   };
 
-  // Timer for resend OTP
   useEffect(() => {
     if (isResendDisabled) {
       const countdown = setInterval(() => {
@@ -132,20 +113,34 @@ const VerifyEmailOTPPage = () => {
   }, [isResendDisabled]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-4 text-gray-700">
-          Verify Your Email
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Enter the OTP sent to <span className="font-semibold">{email}</span>{" "}
-          to complete the verification.
-        </p>
-        <div className="mb-6">
-          <label htmlFor="otp" className="block text-gray-700 mb-2">
-            OTP
-          </label>
-          <div className="flex justify-center items-center space-x-2">
+    <div className="min-h-screen bg-gradient-to-br from-[#060640]/10 to-white flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-2xl overflow-hidden shadow-2xl">
+        <div className="bg-[#060640] p-6 text-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute left-6 top-6 text-white hover:text-white/80 transition-colors"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <h1 className="text-2xl font-bold text-white">Email Verification</h1>
+          <div className="flex items-center justify-center mt-4">
+            <Mail className="h-6 w-6 text-white mr-2" />
+            <span className="text-white/90">{email}</span>
+          </div>
+        </div>
+
+        <div className="p-8">
+          <div className="text-center mb-8">
+            <Lock className="h-12 w-12 mx-auto text-[#060640] mb-4" />
+            <h2 className="text-xl font-semibold text-gray-800">
+              Enter Verification Code
+            </h2>
+            <p className="text-gray-600 mt-2">
+              We've sent a 6-digit code to your email
+            </p>
+          </div>
+
+          <div className="flex justify-center space-x-3 mb-8">
             {otp.map((digit, index) => (
               <input
                 key={index}
@@ -154,30 +149,45 @@ const VerifyEmailOTPPage = () => {
                 value={digit}
                 onChange={(e) => handleOtpChange(index, e.target.value, e)}
                 onKeyDown={(e) => handleOtpChange(index, "", e)}
-                className="w-12 h-12 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-[#060640] focus:border-[#060640]"
+                className="w-12 h-12 text-2xl text-center border-b-2 border-[#060640]/30 focus:border-[#060640] focus:outline-none bg-transparent"
                 maxLength={1}
                 required
               />
             ))}
           </div>
-        </div>
-        <div className="flex justify-between items-center mt-4">
-          <button
-            onClick={handleVerifyClick}
-            className="bg-[#060640] text-white font-semibold py-2 px-4 rounded shadow hover:opacity-85 transition-opacity duration-200"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Verifying..." : "Verify"}
-          </button>
-          <button
-            onClick={handleResendOtp}
-            className={`ml-4 bg-[#060640] text-white font-semibold py-2 px-4 rounded shadow hover:opacity-85 transition-opacity duration-200 ${
-              isResendDisabled ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={isResendDisabled}
-          >
-            {isResendDisabled ? `Resend OTP (${timer}s)` : "Resend OTP"}
-          </button>
+
+          <div className="flex flex-col space-y-4">
+            <button
+              onClick={handleVerifyClick}
+              disabled={isSubmitting}
+              className="w-full flex items-center justify-center gap-2 bg-[#060640] hover:bg-[#060640]/90 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+            >
+              {isSubmitting ? (
+                <>
+                  <RotateCw className="h-5 w-5 animate-spin" />
+                  Verifying...
+                </>
+              ) : (
+                <>
+                  Verify Account
+                  <ArrowRight className="h-5 w-5" />
+                </>
+              )}
+            </button>
+
+            <div className="text-center">
+              <button
+                onClick={handleResendOtp}
+                disabled={isResendDisabled}
+                className={`text-[#060640] hover:text-[#060640]/80 text-sm font-medium inline-flex items-center ${
+                  isResendDisabled ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                <RotateCw className="h-4 w-4 mr-1" />
+                {isResendDisabled ? `Resend code in ${timer}s` : "Resend code"}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

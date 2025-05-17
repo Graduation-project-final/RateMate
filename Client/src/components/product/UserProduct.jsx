@@ -73,14 +73,14 @@ const UserProduct = () => {
   }
 
   return (
-    <div className="pt-[1rem] mt-16 px-4 sm:px-8 lg:pt-16 xl:px-40">
+    <div className="pt-[1rem]  px-4 sm:px-8 lg:pt-16 ">
       {products.length === 0 ? (
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-4">
             You haven't added any products yet.
           </p>
           <Link
-            to="/products/create"
+            to="/add-product"
             className="inline-block px-6 py-3 bg-[#060640] text-white font-medium rounded-full hover:bg-[#0a0a5a] transition-colors duration-300"
           >
             Create Your First Product

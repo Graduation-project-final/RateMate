@@ -68,131 +68,126 @@ const CategoryCard = ({
 
 const CategorySection = () => {
   return (
-    <div className="bg-gray-50 py-20">
-      <div className="container mx-auto px-4">
-        {/* Header with curved bottom border */}
-        <div className="relative pb-8 mb-10">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-800 to-indigo-600 bg-clip-text text-transparent">
-              Top Categories
-            </h2>
-
-            <Link
-              to="category/list"
-              className="group flex items-center mt-4 sm:mt-0 text-indigo-600 font-medium"
+    <>
+      <div className="pt-[1rem] mt-4 px-4 sm:px-8 lg:pt-16 xl:px-40">
+        <div className="flex flex-col sm:flex-row sm:justify-between items-center">
+          <h2 className="text-lg sm:text-xl mr-4 font-semibold text-[#060640]">
+            Top Category
+          </h2>
+          <Link
+            to="category/list"
+            className="flex items-center text-gray-600 hover:underline mt-4 sm:mt-0"
+          >
+            <span className="mr-2 text-[#515161]">See all resources</span>
+            <svg
+              className="w-4 h-4 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <span className="mr-2">See all resources</span>
-              <svg
-                className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 7l5 5-5 5"
-                />
-              </svg>
-            </Link>
-          </div>
-
-          {/* Curved decorative element instead of straight line */}
-          <div className="absolute bottom-0 left-0 right-0 h-2 overflow-hidden">
-            <div className="w-full h-8 bg-gradient-to-r from-purple-800 via-indigo-600 to-purple-800 rounded-full transform translate-y-4"></div>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </Link>
         </div>
+        <hr className="my-4 border-[#FADED9] border-[2px]" />
+      </div>
+      <div className=" py-10 px-32">
+        <div className="container mx-auto px-4">
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* First row */}
+            <div className="lg:col-span-2">
+              <CategoryCard
+                title="Restaurants"
+                category="Dining & Food"
+                image={Restaurant}
+                cta="Show More"
+                bgColor="bg-[#eeeeee]"
+                Color="text-[#646464]"
+                alignImage="flex justify-end"
+                imageSize="large"
+                imageAlignment="right"
+                cardIndex={1}
+              />
+            </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* First row */}
-          <div className="lg:col-span-2">
-            <CategoryCard
-              title="Restaurants"
-              category="Dining & Food"
-              image={Restaurant}
-              cta="Show More"
-              bgColor="bg-[#eeeeee]"
-              Color="text-[#646464]"
-              alignImage="flex justify-end"
-              imageSize="large"
-              imageAlignment="right"
-              cardIndex={1}
-            />
-          </div>
+            <div>
+              <CategoryCard
+                title="Electronics"
+                category="Gadgets & Devices"
+                image={Electronics}
+                bgColor="bg-[#d4edf8]"
+                Color="text-[#3a8fb6]"
+                alignImage="flex justify-center"
+                imageSize="medium"
+                cardIndex={2}
+              />
+            </div>
 
-          <div>
-            <CategoryCard
-              title="Electronics"
-              category="Gadgets & Devices"
-              image={Electronics}
-              bgColor="bg-[#d4edf8]"
-              Color="text-[#3a8fb6]"
-              alignImage="flex justify-center"
-              imageSize="medium"
-              cardIndex={2}
-            />
-          </div>
+            <div>
+              <CategoryCard
+                title="Apparel"
+                category="Clothing & Fashion"
+                image={Apparel}
+                bgColor="bg-[#fef9c4]"
+                Color="text-[#e4cd4c]"
+                alignImage="flex justify-center"
+                imageSize="medium"
+                cardIndex={3}
+              />
+            </div>
 
-          <div>
-            <CategoryCard
-              title="Apparel"
-              category="Clothing & Fashion"
-              image={Apparel}
-              bgColor="bg-[#fef9c4]"
-              Color="text-[#e4cd4c]"
-              alignImage="flex justify-center"
-              imageSize="medium"
-              cardIndex={3}
-            />
-          </div>
+            {/* Second row */}
+            <div>
+              <CategoryCard
+                title="Home Appliances"
+                category="Household Items"
+                image={Household}
+                bgColor="bg-[#f2e7e3]"
+                Color="text-[#e5d3c0]"
+                alignImage="flex justify-center"
+                imageSize="medium"
+                cardIndex={4}
+              />
+            </div>
 
-          {/* Second row */}
-          <div>
-            <CategoryCard
-              title="Home Appliances"
-              category="Household Items"
-              image={Household}
-              bgColor="bg-[#f2e7e3]"
-              Color="text-[#e5d3c0]"
-              alignImage="flex justify-center"
-              imageSize="medium"
-              cardIndex={4}
-            />
-          </div>
+            <div>
+              <CategoryCard
+                title="Fitness Gear"
+                category="Health & Wellness"
+                image={Health}
+                bgColor="bg-[#e3f2e6]"
+                Color="text-[#79df7e]"
+                alignImage="flex justify-center"
+                imageSize="medium"
+                cardIndex={5}
+              />
+            </div>
 
-          <div>
-            <CategoryCard
-              title="Fitness Gear"
-              category="Health & Wellness"
-              image={Health}
-              bgColor="bg-[#e3f2e6]"
-              Color="text-[#79df7e]"
-              alignImage="flex justify-center"
-              imageSize="medium"
-              cardIndex={5}
-            />
-          </div>
-
-          <div className="lg:col-span-2">
-            <CategoryCard
-              title="Luxury Goods"
-              category="High-End Products"
-              image={Luxury}
-              cta="Show More"
-              bgColor="bg-[#fae8e8]"
-              Color="text-[#de8a8d]"
-              alignImage="flex justify-end"
-              imageSize="large"
-              imageAlignment="right"
-              cardIndex={6}
-            />
+            <div className="lg:col-span-2">
+              <CategoryCard
+                title="Luxury Goods"
+                category="High-End Products"
+                image={Luxury}
+                cta="Show More"
+                bgColor="bg-[#fae8e8]"
+                Color="text-[#de8a8d]"
+                alignImage="flex justify-end"
+                imageSize="large"
+                imageAlignment="right"
+                cardIndex={6}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
