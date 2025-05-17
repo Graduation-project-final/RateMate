@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import GoogleIcon from "../assets/Svg/GoogleIcon";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaArrowRight } from "react-icons/fa";
 import FacebookIcon from "../assets/Svg/FacebookIcon";
 
 const SignUp = ({ isOpen, onClose, onLoginOpen }) => {
@@ -92,15 +92,11 @@ const SignUp = ({ isOpen, onClose, onLoginOpen }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div
-        className="fixed inset-0 bg-black opacity-40"
-        onClick={onClose}
-      ></div>
-      <div className="relative bg-white p-8 rounded-lg shadow-lg w-[25rem] z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm overflow-y-auto py-8">
+      <div className="relative bg-white p-8 rounded-2xl shadow-2xl w-[28rem] max-h-[90vh] overflow-y-auto z-50 border border-gray-100">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -117,100 +113,126 @@ const SignUp = ({ isOpen, onClose, onLoginOpen }) => {
             />
           </svg>
         </button>
-        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
-        <div className="mb-4">
+
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-[#060640] mb-1">
+            Create Account
+          </h2>
+          <p className="text-gray-600 text-sm">Get started with your journey</p>
+        </div>
+
+        <div className="space-y-3 mb-4">
           <button
             onClick={handleGoogleSignIn}
-            className="w-full bg-[#060640] text-white font-bold py-2 px-4 rounded-lg hover:opacity-80 flex items-center justify-center mb-2"
+            className="w-full flex items-center justify-center gap-2 bg-[#060640] text-white font-medium py-2.5 px-4 rounded-xl hover:opacity-90 transition-all text-sm"
           >
-            <GoogleIcon />
+            <GoogleIcon className="w-4 h-4" />
             Sign up with Google
           </button>
           <a
             href="http://localhost:4000/api/auth/facebook"
-            className="w-full bg-[#060640] text-white font-bold py-2 px-4 rounded-lg hover:opacity-80 flex items-center justify-center"
+            className="w-full flex items-center justify-center gap-2 bg-[#060640] text-white font-medium py-2.5 px-4 rounded-xl hover:opacity-90 transition-all text-sm"
           >
-            <FacebookIcon />
-            Log in with Facebook
+            <FacebookIcon className="w-4 h-4" />
+            Sign up with Facebook
           </a>
         </div>
+
         <div className="relative flex items-center justify-center mb-4">
-          <span className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-300"></span>
-          </span>
-          <span className="relative bg-white px-4 text-gray-500">or</span>
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative bg-white px-3 text-gray-500 text-sm">
+            or sign up with email
+          </div>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Name
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Full Name
             </label>
-            <input
-              type="text"
-              className="mt-1 p-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:border-[#FADED9] sm:text-sm"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type="text"
+                className="w-full px-3 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#060640] focus:border-transparent transition-all"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="John Doe"
+              />
+            </div>
             {errors.name && (
               <p className="text-red-500 text-xs mt-1">{errors.name}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Email
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email Address
             </label>
-            <input
-              type="email"
-              className="mt-1 p-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:border-[#FADED9] sm:text-sm"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type="email"
+                className="w-full px-3 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#060640] focus:border-transparent transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+              />
+            </div>
             {errors.email && (
               <p className="text-red-500 text-xs mt-1">{errors.email}</p>
             )}
           </div>
-          <div className="mb-4 relative">
-            <label className="block text-sm font-medium text-gray-700">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              className="mt-1 p-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:border-[#FADED9] sm:text-sm"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <span
-              className="absolute right-2 top-9 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-3 py-2.5 text-sm rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#060640] focus:border-transparent transition-all pr-10"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700 transition-colors"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 text-xs mt-1">{errors.password}</p>
             )}
           </div>
+
           <button
             type="submit"
-            className="w-full bg-[#060640] text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-80"
+            className="w-full flex items-center justify-center gap-2 bg-[#060640] text-white font-medium py-2.5 px-4 rounded-xl hover:opacity-90 transition-all text-sm shadow-md mt-2"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Signing Up..." : "Sign Up"}
+            {isSubmitting ? "Creating Account..." : "Create Account"}
+            {!isSubmitting && <FaArrowRight size={14} />}
           </button>
         </form>
-        <div className="flex justify-between items-center mt-4">
-          <Link to="#" className="text-sm text-gray-500 hover:underline">
-            Forgot password?
-          </Link>
-          <Link
-            to="#"
-            className="text-sm text-gray-500 hover:underline"
-            onClick={() => {
-              onClose();
-              onLoginOpen();
-            }}
-          >
-            Have an account? Log in
-          </Link>
+
+        <div className="flex justify-center items-center mt-4 text-sm">
+          <div className="text-gray-600">
+            Already have an account?{" "}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+                onLoginOpen();
+              }}
+              className="text-[#060640] hover:text-[#060640] font-medium hover:underline transition-colors"
+            >
+              Log in
+            </button>
+          </div>
         </div>
       </div>
     </div>

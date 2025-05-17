@@ -20,156 +20,180 @@ const CategoryCard = ({
   imageAlignment = "center",
   cardIndex,
 }) => {
-  const imageClass = `${
-    imageSize === "large" ? "scale-110 lg:mt-[-16]" : "scale-100"
-  } ${
-    cardIndex === 1 || cardIndex === 6
-      ? "absolute right-0 h-full w-1/2 object-cover"
-      : "flex justify-center items-center"
-  }`;
+  // Determine if this is a featured card (larger cards that were previously spanning 2 columns)
+  const isFeatured = cardIndex === 1 || cardIndex === 6;
 
   return (
     <div
-      className={`relative p-4 rounded-lg shadow-md ${bgColor} flex flex-col h-[19rem] ${
-        cardIndex === 1 || cardIndex === 6 ? "lg:flex-row" : ""
+      className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-xl ${
+        isFeatured ? "h-72" : "h-60"
       }`}
     >
-      <div className="flex-1">
-        <div className="text-sm text-gray-500 ">{category}</div>
-        <div className={`text-2xl font-bold ${Color}`}>{title}</div>
-        {cta && (
-          <Link to="/category/list">
-            <button className="mt-4 py-2 px-4 bg-[#060640] hover:opacity-90 w-36 text-white rounded-3xl">
-              {cta}
-            </button>
-          </Link>
-        )}
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 z-10"></div>
+
+      {/* Image as background */}
+      <div className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-110">
+        <img src={image} alt={title} className="w-full h-full object-cover" />
       </div>
-      <div
-        className={`relative flex-1 ${
-          cardIndex === 1 || cardIndex === 6
-            ? "flex justify-end items-center"
-            : alignImage
-        }`}
-      >
-        <img
-          src={image}
-          alt={title}
-          className={`object-cover rounded-lg ${imageClass}`}
-          style={{ width: "100%", height: "100%" }}
-        />
+
+      {/* Category badge */}
+      <div className="absolute top-4 left-4 z-20">
+        <span
+          className={`inline-block py-1 px-3 rounded-full text-xs font-medium bg-white bg-opacity-30 backdrop-blur-sm text-white`}
+        >
+          {category}
+        </span>
+      </div>
+
+      {/* Content container - positioned at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform transition-transform duration-300 group-hover:translate-y-0">
+        <h3 className={`text-2xl font-bold text-white mb-2`}>{title}</h3>
+
+        {cta && (
+          <div className="transform transition-all duration-300 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0">
+            <Link to="/category/list">
+              <button
+                className={`mt-2 py-2 px-6 rounded-full bg-white text-gray-900 font-medium shadow-lg hover:bg-opacity-90 transition-all duration-300`}
+              >
+                {cta}
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-const CategorySectoin = () => {
+const CategorySection = () => {
   return (
-    <>
-      <div className="pt-[50rem] mt-16 px-4 sm:px-8 lg:pt-16 xl:px-40">
-        <div className="flex flex-col sm:flex-row sm:justify-between items-center">
-          <h2 className="text-lg sm:text-xl mr-4 font-semibold text-[#060640]">
-            Top Categories
-          </h2>
-          <Link
-            to="category/list"
-            className="flex items-center text-gray-600 hover:underline mt-4 sm:mt-0"
-          >
-            <span className="mr-2 text-[#515161]">See all resources</span>
-            <svg
-              className="w-4 h-4 text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+    <div className="bg-gray-50 py-20">
+      <div className="container mx-auto px-4">
+        {/* Header with curved bottom border */}
+        <div className="relative pb-8 mb-10">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-800 to-indigo-600 bg-clip-text text-transparent">
+              Top Categories
+            </h2>
+
+            <Link
+              to="category/list"
+              className="group flex items-center mt-4 sm:mt-0 text-indigo-600 font-medium"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </Link>
-        </div>
-        <hr className="my-4 border-[#FADED9] border-[2px]" />
-      </div>
+              <span className="mr-2">See all resources</span>
+              <svg
+                className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 7l5 5-5 5"
+                />
+              </svg>
+            </Link>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-10 lg:px-40 mt-10">
-        {/* First row */}
-        <div className="lg:col-span-2">
-          <CategoryCard
-            title="Restaurants"
-            category="Dining & Food"
-            image={Restaurant}
-            cta="Show More"
-            bgColor="bg-[#eeeeee]"
-            Color="text-[#646464]"
-            alignImage="flex justify-end"
-            imageSize="large" // Larger image
-            imageAlignment="right" // Align image to the right
-            cardIndex={1} // First card
-          />
+          {/* Curved decorative element instead of straight line */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 overflow-hidden">
+            <div className="w-full h-8 bg-gradient-to-r from-purple-800 via-indigo-600 to-purple-800 rounded-full transform translate-y-4"></div>
+          </div>
         </div>
-        <CategoryCard
-          title="Electronics"
-          category="Gadgets & Devices"
-          image={Electronics}
-          bgColor="bg-[#d4edf8]"
-          Color="text-[#3a8fb6]"
-          alignImage="flex justify-center"
-          imageSize="medium" // Default size
-          cardIndex={2} // Second card
-        />
-        <CategoryCard
-          title="Apparel"
-          category="Clothing & Fashion"
-          image={Apparel}
-          bgColor="bg-[#fef9c4]"
-          Color="text-[#e4cd4c]"
-          alignImage="flex justify-center"
-          imageSize="medium" // Default size
-          cardIndex={3} // Third card
-        />
 
-        {/* Second row */}
-        <CategoryCard
-          title="Home Appliances"
-          category="Household Items"
-          image={Household}
-          bgColor="bg-[#f2e7e3]"
-          Color="text-[#e5d3c0]"
-          alignImage="flex justify-center"
-          imageSize="medium" // Default size
-          cardIndex={4} // Fourth card
-        />
-        <CategoryCard
-          title="Fitness Gear"
-          category="Health & Wellness"
-          image={Health}
-          bgColor="bg-[#e3f2e6]"
-          Color="text-[#79df7e]"
-          alignImage="flex justify-center"
-          imageSize="medium" // Default size
-          cardIndex={5} // Fifth card
-        />
-        <div className="lg:col-span-2">
-          <CategoryCard
-            title="Luxury Goods"
-            category="High-End Products"
-            image={Luxury}
-            cta="Show More"
-            bgColor="bg-[#fae8e8]"
-            Color="text-[#de8a8d]"
-            alignImage="flex justify-end"
-            imageSize="large" // Larger image
-            imageAlignment="right" // Align image to the right
-            cardIndex={6} // Sixth card
-          />
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* First row */}
+          <div className="lg:col-span-2">
+            <CategoryCard
+              title="Restaurants"
+              category="Dining & Food"
+              image={Restaurant}
+              cta="Show More"
+              bgColor="bg-[#eeeeee]"
+              Color="text-[#646464]"
+              alignImage="flex justify-end"
+              imageSize="large"
+              imageAlignment="right"
+              cardIndex={1}
+            />
+          </div>
+
+          <div>
+            <CategoryCard
+              title="Electronics"
+              category="Gadgets & Devices"
+              image={Electronics}
+              bgColor="bg-[#d4edf8]"
+              Color="text-[#3a8fb6]"
+              alignImage="flex justify-center"
+              imageSize="medium"
+              cardIndex={2}
+            />
+          </div>
+
+          <div>
+            <CategoryCard
+              title="Apparel"
+              category="Clothing & Fashion"
+              image={Apparel}
+              bgColor="bg-[#fef9c4]"
+              Color="text-[#e4cd4c]"
+              alignImage="flex justify-center"
+              imageSize="medium"
+              cardIndex={3}
+            />
+          </div>
+
+          {/* Second row */}
+          <div>
+            <CategoryCard
+              title="Home Appliances"
+              category="Household Items"
+              image={Household}
+              bgColor="bg-[#f2e7e3]"
+              Color="text-[#e5d3c0]"
+              alignImage="flex justify-center"
+              imageSize="medium"
+              cardIndex={4}
+            />
+          </div>
+
+          <div>
+            <CategoryCard
+              title="Fitness Gear"
+              category="Health & Wellness"
+              image={Health}
+              bgColor="bg-[#e3f2e6]"
+              Color="text-[#79df7e]"
+              alignImage="flex justify-center"
+              imageSize="medium"
+              cardIndex={5}
+            />
+          </div>
+
+          <div className="lg:col-span-2">
+            <CategoryCard
+              title="Luxury Goods"
+              category="High-End Products"
+              image={Luxury}
+              cta="Show More"
+              bgColor="bg-[#fae8e8]"
+              Color="text-[#de8a8d]"
+              alignImage="flex justify-end"
+              imageSize="large"
+              imageAlignment="right"
+              cardIndex={6}
+            />
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CategorySectoin;
+export default CategorySection;

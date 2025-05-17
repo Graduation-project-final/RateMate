@@ -11,79 +11,76 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <div className="py-16 px-6 lg:px-0">
-      <div className="flex flex-col-reverse lg:flex-row-reverse lg:w-4/5 sm:w-full mx-auto space-y-10 lg:space-y-0 lg:space-x-10">
-        {/* Left Section */}
-        <div className="lg:w-1/2 md:w-full ml-5 mt-1" data-aos="fade-left">
-          <h5 className="text-lg font-bold text-gray-600">ABOUT US</h5>
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 mt-4">
-            RateMate - Rating Platform
+    <section className="bg-gradient-to-br from-[#060640] via-[#1a1a4e] to-[#060640] text-white py-16 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left Info Panel */}
+        <div data-aos="fade-up" className="space-y-6">
+          <h4 className="text-sm font-semibold tracking-widest text-[#FADED9]">
+            ABOUT US
+          </h4>
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+            The Story Behind <span className="text-[#FADED9]">RateMate</span>
           </h1>
-          <p className="text-gray-600 mt-6 leading-relaxed">
+          <p className="text-gray-200 leading-relaxed">
             Welcome to RateMate, your go-to platform for insightful ratings and
             reviews in Jordan. At RateMate, we are dedicated to helping you make
             informed decisions by providing comprehensive and reliable ratings
-            for various services and products. Our mission is to offer a
-            transparent and user-friendly platform where you can share and
-            explore honest feedback on your favorite places and experiences.
+            for various services and products.
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            Our mission is to offer a transparent and user-friendly platform
+            where you can share and explore honest feedback on your favorite
+            places and experiences.
           </p>
           <Link
-            to={"/review"}
-            className="inline-block px-6 py-3 border-2 border-[#060640] text-white font-medium text-sm uppercase rounded-lg mt-6 bg-[#060640] hover:bg-transparent hover:text-[#060640] focus:outline-none transition duration-300 ease-in-out"
+            to="/review"
+            className="inline-block bg-[#FADED9] text-[#060640] px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-transparent hover:text-[#FADED9] border-2 border-[#FADED9]"
           >
             Explore Ratings Now
           </Link>
         </div>
 
-        {/* Right Section */}
+        {/* Right Feature Cards */}
         <div
-          className="lg:w-1/2 flex flex-col md:flex-row justify-center lg:justify-between items-center space-y-10 lg:space-y-0"
-          data-aos="fade-right"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          data-aos="fade-left"
         >
-          {/* Top-Rated Spots */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center text-center">
-            <div className="mb-4">
-              <Icon path={mdiStar} className="text-[#060640]" size={2} />
+          {/* Top-Rated */}
+          <div className="bg-white/5 backdrop-blur-lg p-6 rounded-2xl shadow-md text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="flex justify-center mb-4">
+              <Icon path={mdiStar} size={2} color="#FADED9" />
             </div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-              Top-Rated Spots
-            </h3>
-            <p className="text-gray-600">
+            <h3 className="text-xl font-bold mb-2">Top-Rated Spots</h3>
+            <p className="text-sm text-gray-300 mb-4">
               Discover the highest-rated places and services in Jordan,
-              handpicked by our community of reviewers.
+              handpicked by our community.
             </p>
             <img
               src="./src/assets/images/home.jpg"
-              alt="Top-rated places"
-              className="mt-6 w-3/4 rounded-lg shadow-md"
+              alt="Top-rated"
+              className="w-full rounded-lg shadow-md"
             />
           </div>
 
           {/* Exclusive Reviews */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center text-center">
+          <div className="bg-white/5 backdrop-blur-lg p-6 rounded-2xl shadow-md text-center hover:shadow-xl transition-shadow duration-300">
             <img
               src="./src/assets/images/rest.jpg"
               alt="Exclusive reviews"
-              className="mb-6 w-3/4 rounded-lg shadow-md"
+              className="w-full mb-4 rounded-lg shadow-md"
             />
-            <div className="mb-4">
-              <Icon
-                path={mdiStarCircleOutline}
-                className="text-[#060640]"
-                size={2}
-              />
+            <div className="flex justify-center mb-4">
+              <Icon path={mdiStarCircleOutline} size={2} color="#FADED9" />
             </div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-3">
-              Exclusive Reviews
-            </h3>
-            <p className="text-gray-600">
+            <h3 className="text-xl font-bold mb-2">Exclusive Reviews</h3>
+            <p className="text-sm text-gray-300">
               Explore exclusive reviews and insights on the best places to visit
               and the top services to use, all rated by real users.
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

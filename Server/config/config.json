@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "abd",
-    "password": "Abd2001@",
+    "username": "postgres",
+    "password": "root",
     "database": "RateMate",
     "host": "localhost",
     "dialect": "postgres"
