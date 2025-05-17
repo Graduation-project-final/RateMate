@@ -21,7 +21,7 @@ function ReviewSection() {
 
   return (
     <>
-      <div className="pt-[1rem] mt-16 px-4 sm:px-8 lg:pt-16 xl:px-40">
+      <div className="pt-[1rem] px-4 sm:px-8  xl:px-40">
         <div className="flex flex-col sm:flex-row sm:justify-between items-center">
           <h2 className="text-lg sm:text-xl mr-4 font-semibold text-[#060640]">
             Top Reviews
