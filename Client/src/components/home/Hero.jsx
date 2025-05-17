@@ -1,62 +1,107 @@
-import React, { useState } from "react";
+import React from "react";
 import BgHero from "../../assets/images/Rectangle .png";
 import HeroImag from "../../assets/images/reviews-concept-landing-page.png";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <>
-      <div className="relative flex justify-center mt-5 z-[-30] ">
-        <img src={BgHero} alt="" className="hidden lg:block" />
+    <div className="relative overflow-hidden bg-gradient-to-br from-indigo-900 to-purple-800 text-white">
+      {/* Background elements */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-10">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-yellow-300 blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-pink-500 blur-3xl"></div>
       </div>
-      <div className="absolute w-full p-5 top-[-40px] flex flex-col lg:flex-row lg:items-center lg:p-[6rem] lg:justify-around">
-        <div className="order-2 lg:order-1">
-          <h3 className="text-left text-2xl font-bold text-[#060640] lg:text-white tracking-[0.25rem] w-full lg:w-[600px] pl-0 lg:pl-28">
-            Discover Your City's Best Kept{" "}
-            <span className="text-[#FADED9]">Secrets</span> Find top-rated
-            restaurants, shops, and experiences curated by locals just for you.
-          </h3>
-          <div className="flex justify-around mt-5 lg:mt-10 lg:pl-20 items-center">
-            <Link to="/category/list">
-              <button className="w-[150px] h-[35px] bg-[#FADED9] rounded-xl hover:opacity-80">
-                Start Reviewing
-              </button>
-            </Link>
-            <div className="flex flex-col items-center mx-2">
-              <p className="font-serif lg:text-white text-[#060640] font-semibold text-2xl leading-7">
-                236+
-              </p>
-              <p className="font-bitter font-normal text-xs leading-3 text-[#FADED9]">
-                Business today
-              </p>
+
+      {/* Hidden background image for maintaining functionality */}
+      <div className="hidden">
+        <img src={BgHero} alt="" />
+      </div>
+
+      <div className="container mx-auto px-4 py-16">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          {/* Left content side */}
+          <div className="lg:w-1/2 space-y-8 z-10">
+            <div className="relative">
+              <div className="absolute -top-6 -left-6 w-16 h-16 bg-amber-200 rounded-full opacity-30"></div>
+              <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight relative">
+                Discover Your City's Best Kept{" "}
+                <span className="text-amber-200">Secrets</span>
+              </h2>
             </div>
-            <div className="flex flex-col items-center mx-2">
-              <p className="font-serif lg:text-white text-[#060640] font-semibold text-2xl leading-7">
-                98%
-              </p>
-              <p className="font-bitter font-normal text-xs leading-3 text-[#FADED9]">
-                Results rated
-              </p>
+
+            <p className="text-lg text-gray-100">
+              Find top-rated restaurants, shops, and experiences curated by
+              locals just for you.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-8">
+              <Link to="/category/list">
+                <button className="px-8 py-3 bg-amber-200 text-indigo-900 font-medium rounded-full transform hover:scale-105 transition-transform duration-300 shadow-lg">
+                  Start Reviewing
+                </button>
+              </Link>
+
+              <div className="flex gap-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold">236+</div>
+                  <div className="text-amber-200 text-sm">Business today</div>
+                </div>
+
+                <div className="text-center">
+                  <div className="text-3xl font-bold">98%</div>
+                  <div className="text-amber-200 text-sm">Results rated</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Search box */}
+            <div className="relative">
+              <div className="flex items-center bg-white bg-opacity-20 backdrop-blur-md rounded-full p-4 pl-6 border border-white border-opacity-30">
+                <span className="text-gray-100">
+                  Search for places, restaurants, and more!
+                </span>
+                <div className="ml-auto bg-white rounded-full p-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-indigo-900"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right image side with decorative elements */}
+          <div className="lg:w-1/2 relative z-10">
+            <div className="relative">
+              {/* Decorative circles */}
+              <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full opacity-70 blur-sm"></div>
+              <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full opacity-70 blur-sm"></div>
+
+              {/* Main image in a styled container */}
+              <div className="p-1 rounded-3xl">
+                <div className="p-2 rounded-2xl overflow-hidden">
+                  <img
+                    src={HeroImag}
+                    alt="City exploration illustration"
+                    className="w-full h-auto rounded-xl transform hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="order-1 lg:order-2 text-center lg:text-right mb-5 lg:mb-0">
-          <img
-            src={HeroImag}
-            alt="Description"
-            className="h-[400px] w-[300px] mt-12 lg:h-[513px] lg:w-[600px] mx-auto lg:mx-0 lg:mt-10 lg:pr-14"
-          />
-        </div>
       </div>
-
-      {/* Search box replacement */}
-      <div className="flex flex-col mt-[30rem] lg:mt-0 lg:flex-row lg:w-[480px] lg:h-[55px] w-[350px] lg:mx-0 justify-between align-middle items-center rounded-3xl border border-[#060640] p-2 shadow-md absolute left-[200px] lg:left-[200px] top-[350px] lg:top-[505px] transform -translate-x-1/2 lg:translate-x-0">
-        <div className="text-center lg:text-left w-full lg:w-auto text-[#060640] font-medium pl-20">
-          Search for places, restaurants, and more!
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 

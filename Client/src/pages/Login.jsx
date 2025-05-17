@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaArrowRight } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -77,15 +77,11 @@ const Login = ({ isOpen, onClose, onSignUpOpen }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div
-        className="fixed inset-0 bg-black opacity-40"
-        onClick={onClose}
-      ></div>
-      <div className="relative bg-white p-8 rounded-lg shadow-lg w-[25rem] z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="relative bg-white p-10 rounded-2xl shadow-2xl w-[30rem] z-50 border border-gray-100">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -102,96 +98,121 @@ const Login = ({ isOpen, onClose, onSignUpOpen }) => {
             />
           </svg>
         </button>
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-        <div className="mb-4">
+
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-[#060640] mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-gray-600">Sign in to access your account</p>
+        </div>
+
+        <div className="space-y-4 mb-6">
           <button
             onClick={handleGoogleSignIn}
-            className="w-full bg-[#060640] text-white font-bold py-2 px-4 rounded-lg hover:opacity-80 flex items-center justify-center mb-2"
+            className="w-full flex items-center justify-center gap-3 bg-[#060640] text-white font-medium py-3 px-4 rounded-xl hover:opacity-90 transition-all"
           >
             <GoogleIcon />
-            Log in with Google
+            Continue with Google
           </button>
           <a
             href="http://localhost:4000/api/auth/facebook"
-            className="w-full bg-[#060640] text-white font-bold py-2 px-4 rounded-lg hover:opacity-80 flex items-center justify-center"
+            className="w-full flex items-center justify-center gap-3 bg-[#060640] text-white font-medium py-3 px-4 rounded-xl hover:opacity-90 transition-all"
           >
             <FacebookIcon />
-            Log in with Facebook
+            Continue with Facebook
           </a>
         </div>
-        <div className="relative flex items-center justify-center mb-4">
-          <span className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-300"></span>
-          </span>
-          <span className="relative bg-white px-4 text-gray-500">or</span>
+
+        <div className="relative flex items-center justify-center mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative bg-white px-4 text-gray-500">
+            or sign in with email
+          </div>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Email
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email Address
             </label>
-            <input
-              type="email"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                type="email"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#060640] focus:border-transparent transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+              />
+            </div>
             {errors.email && (
               <p className="text-red-500 text-xs mt-1">{errors.email}</p>
             )}
           </div>
-          <div className="mb-4 relative">
-            <label className="block text-sm font-medium text-gray-700">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <span
-              className="absolute right-2 top-9 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[#060640] focus:border-transparent transition-all pr-10"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-3.5 text-gray-500 hover:text-gray-700 transition-colors"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 text-xs mt-1">{errors.password}</p>
             )}
           </div>
+
           {errors.apiError && (
             <p className="text-red-500 text-xs mt-1">{errors.apiError}</p>
           )}
+
           <button
             type="submit"
-            className="w-full bg-[#060640] text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-80"
+            className="w-full flex items-center justify-center gap-2 bg-[#060640] text-white font-semibold py-3 px-4 rounded-xl hover:opacity-90 transition-all shadow-lg"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Log In"}
+            {loading ? "Signing in..." : "Sign In"}
+            {!loading && <FaArrowRight />}
           </button>
         </form>
-        <div className="flex justify-between items-center mt-4">
+
+        <div className="flex justify-between items-center mt-6 text-sm">
           <Link
             to="/forget-password"
-            className="text-sm text-gray-500 hover:underline"
+            className="text-[#060640] hover:text-[#060640] hover:underline transition-colors"
             onClick={() => {
               onClose();
             }}
           >
             Forgot password?
           </Link>
-          <Link
-            to="#"
-            className="text-sm text-gray-500 hover:underline"
-            onClick={(e) => {
-              e.preventDefault();
-              onClose();
-              onSignUpOpen();
-            }}
-          >
-            Sign up
-          </Link>
+          <div className="text-gray-600">
+            Don't have an account?{" "}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+                onSignUpOpen();
+              }}
+              className="text-[#060640] hover:text-[#060640] font-medium hover:underline transition-colors"
+            >
+              Sign up
+            </button>
+          </div>
         </div>
       </div>
     </div>
