@@ -6,6 +6,7 @@ const {
   approveProduct,
   getApprovedProducts,
   getApprovedProductById,
+  getUserProducts,
 } = require("../controllers/productController");
 const verifyToken = require("../middlewares/auth");
 const productUpload = require("../utils/productUpload");
@@ -15,5 +16,6 @@ router.get("/products", getAllProducts);
 router.put("/products/:id/approve", approveProduct);
 router.get("/products/approved", getApprovedProducts);
 router.get("/products/approved/:id", getApprovedProductById);
+router.get("/products/my", verifyToken, getUserProducts);
 
 module.exports = router;

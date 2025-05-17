@@ -143,10 +143,30 @@ const getApprovedProductById = async (req, res) => {
   }
 };
 
+const getUserProducts = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const products = await Product.findAll({ where: { userId } });
+
+    res.status(200).json({
+      message: "User's products retrieved successfully",
+      products,
+    });
+  } catch (error) {
+    console.error("Error fetching user's products:", error);
+    res.status(500).json({
+      message: "Error retrieving user's products",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   getAllProducts,
   approveProduct,
   getApprovedProducts,
   getApprovedProductById,
+  getUserProducts,
 };

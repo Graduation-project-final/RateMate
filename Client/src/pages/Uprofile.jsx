@@ -4,6 +4,7 @@ import * as LucideIcons from "lucide-react";
 import UserFavorite from "../components/otherComponents/UserFavorite";
 import UserReview from "../components/otherComponents/UserReview";
 import UserReplay from "../components/otherComponents/UserReplay";
+import UserProduct from "../components/product/UserProduct";
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -407,6 +408,7 @@ const ProfilePage = () => {
       <UserFavorite />
       <UserReview />
       <UserReplay />
+      <UserProduct />
     </div>
   );
 };
