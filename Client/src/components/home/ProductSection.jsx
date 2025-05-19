@@ -58,7 +58,6 @@ const ProductSection = () => {
 
   return (
     <>
-      {" "}
       <div className="pt-[1rem] mt-4 px-4 sm:px-8 lg:pt-16 xl:px-40">
         <div className="flex flex-col sm:flex-row sm:justify-between items-center">
           <h2 className="text-lg sm:text-xl mr-4 font-semibold text-[#060640]">
@@ -87,7 +86,7 @@ const ProductSection = () => {
         </div>
         <hr className="my-4 border-[#FADED9] border-[2px]" />
       </div>
-      <div className="pt-[1rem] px-4 sm:px-8  xl:px-40">
+      <div className="pt-[1rem] px-4 sm:px-8 xl:px-40">
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <motion.div
@@ -95,9 +94,9 @@ const ProductSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
             >
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-64 overflow-hidden flex-shrink-0">
                 <img
                   src={product.mainImage}
                   alt={product.title}
@@ -108,25 +107,25 @@ const ProductSection = () => {
                   }}
                 />
               </div>
-              <div className="p-6">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-bold text-[#060640]">
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-bold text-[#060640] flex-grow pr-2">
                     {product.title}
                   </h3>
-                  <span className="px-3 py-1 bg-[#F0F0F5] text-[#060640] text-xs font-semibold rounded-full">
+                  <span className="px-3 py-1 bg-[#F0F0F5] text-[#060640] text-xs font-semibold rounded-full flex-shrink-0">
                     {product.category}
                   </span>
                 </div>
-                <p className="text-gray-600 mt-3 line-clamp-2">
+                <p className="text-gray-600 line-clamp-3 flex-grow">
                   {product.description}
                 </p>
-                <div className="mt-6 flex justify-between items-center">
+                <div className="mt-6 flex justify-between items-center pt-4 border-t border-gray-100">
                   <span className="text-sm text-gray-500">
                     Added: {new Date(product.createdAt).toLocaleDateString()}
                   </span>
                   <Link
                     to={`/productDetails/${product.id}`}
-                    className="px-4 py-2 bg-[#060640] text-white text-sm font-medium rounded-full hover:bg-[#0a0a5a] transition-colors duration-300"
+                    className="px-4 py-2 bg-[#060640] text-white text-sm font-medium rounded-full hover:bg-[#0a0a5a] transition-colors duration-300 flex-shrink-0"
                   >
                     View Details
                   </Link>

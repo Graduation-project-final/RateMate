@@ -112,6 +112,20 @@ const VerifyEmailOTPPage = () => {
     }
   }, [isResendDisabled]);
 
+  const handlePaste = (e) => {
+    const pastedData = e.clipboardData.getData("Text").trim();
+    if (/^\d{6}$/.test(pastedData)) {
+      const otpArray = pastedData.split("");
+      setOtp(otpArray);
+
+      // Focus the last input
+      const lastInput = document.getElementById("otp-5");
+      if (lastInput) lastInput.focus();
+
+      e.preventDefault(); // Prevent the default paste
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#060640]/10 to-white flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl overflow-hidden shadow-2xl">
@@ -149,6 +163,7 @@ const VerifyEmailOTPPage = () => {
                 value={digit}
                 onChange={(e) => handleOtpChange(index, e.target.value, e)}
                 onKeyDown={(e) => handleOtpChange(index, "", e)}
+                onPaste={handlePaste}
                 className="w-12 h-12 text-2xl text-center border-b-2 border-[#060640]/30 focus:border-[#060640] focus:outline-none bg-transparent"
                 maxLength={1}
                 required

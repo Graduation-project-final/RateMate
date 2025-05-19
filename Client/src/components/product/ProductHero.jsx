@@ -49,7 +49,7 @@ const ProductHero = () => {
             className="flex items-center bg-white text-purple-800 hover:bg-purple-100 px-6 py-3 rounded-lg font-medium shadow-lg transform transition duration-200 hover:scale-105"
           >
             <PlusCircle className="mr-2" size={20} />
-            Add New Review
+            Add New Product
           </button>
         </div>
 

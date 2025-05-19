@@ -20,14 +20,9 @@ const CategoryCard = ({
   imageAlignment = "center",
   cardIndex,
 }) => {
-  // Determine if this is a featured card (larger cards that were previously spanning 2 columns)
-  const isFeatured = cardIndex === 1 || cardIndex === 6;
-
   return (
     <div
-      className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-xl ${
-        isFeatured ? "h-72" : "h-60"
-      }`}
+      className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-xl h-72`}
     >
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 z-10"></div>

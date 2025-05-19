@@ -39,6 +39,96 @@ import Product from "./pages/Product";
 import AddProduct from "./pages/AddProduct";
 import ProductDetails from "./pages/ProductDetails";
 
+// Beautiful Scroll to top button with stars
+const ScrollToTopButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    isVisible && (
+      <button onClick={scrollToTop} className="fixed bottom-8 right-8 group">
+        <div className="relative w-16 h-16 bg-gradient-to-br from-yellow-400 via-yellow-500 to-orange-500 rounded-full shadow-lg hover:shadow-2xl transform hover:scale-110 transition-all duration-300 ease-in-out">
+          {/* Animated stars around the button */}
+          <div className="absolute -top-1 -left-1 w-3 h-3 transform rotate-12 animate-pulse">
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="text-yellow-300"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </div>
+
+          <div className="absolute -bottom-1 -right-1 w-2 h-2 transform -rotate-12 animate-pulse delay-300">
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="text-yellow-200"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </div>
+
+          <div className="absolute -top-2 -right-2 w-2 h-2 transform rotate-45 animate-pulse delay-150">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="text-white">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </div>
+
+          {/* Inner circle with gradient */}
+          <div className="absolute inset-1 bg-gradient-to-br from-white to-yellow-50 rounded-full shadow-inner">
+            {/* Arrow icon */}
+            <div className="flex items-center justify-center h-full">
+              <svg
+                className="w-6 h-6 text-orange-600 transform group-hover:-translate-y-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M7 11l5-5m0 0l5 5m-5-5v12"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Glow effect on hover */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 opacity-0 group-hover:opacity-20 animate-ping"></div>
+        </div>
+
+        {/* Floating text */}
+        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="text-xs text-gray-600 font-medium whitespace-nowrap bg-white px-2 py-1 rounded shadow-md border">
+            Back to Top ⭐
+          </span>
+        </div>
+      </button>
+    )
+  );
+};
+
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -66,7 +156,7 @@ const App = () => {
         draggable
         pauseOnHover
         theme="colored"
-      />{" "}
+      />
       <CartProvider>
         {!hideNavbarFooter && <Navbar />}
         <main className="flex-grow">
@@ -120,6 +210,7 @@ const App = () => {
           </Routes>
         </main>
         {!hideNavbarFooter && <Footer />}
+        <ScrollToTopButton />
       </CartProvider>
     </div>
   );

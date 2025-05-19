@@ -591,17 +591,25 @@ const ProfilePage = () => {
                       <img
                         src={
                           profilePhotoPreview ||
-                          profileData.profilePhoto ||
-                          "/default-profile.png"
+                          (profileData.profilePhoto &&
+                          profileData.profilePhoto !== "/default-profile.png"
+                            ? profileData.profilePhoto
+                            : "/default-profile.png")
                         }
-                        // alt="Profile Preview"
-                        className={`w-16 h-16 rounded-full object-cover transition-opacity duration-300 ${
+                        alt="Profile"
+                        className={`w-24 h-24 rounded-full object-cover transition-opacity duration-300 ${
                           isImageLoading.profile ? "opacity-50" : "opacity-100"
                         }`}
                         onError={(e) => {
-                          e.target.src = "/default-profile.png";
+                          if (
+                            e.target.src !==
+                            window.location.origin + "/default-profile.png"
+                          ) {
+                            e.target.src = "/default-profile.png";
+                          }
                         }}
                       />
+
                       {isImageLoading.profile && (
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>
@@ -632,17 +640,25 @@ const ProfilePage = () => {
                       <img
                         src={
                           coverPhotoPreview ||
-                          profileData.coverPhoto ||
-                          "/default-cover.jpg"
+                          (profileData.coverPhoto &&
+                          profileData.coverPhoto !== "/default-cover.jpg"
+                            ? profileData.coverPhoto
+                            : "/default-cover.jpg")
                         }
-                        // alt="Cover Preview"
+                        alt="Cover"
                         className={`w-24 h-16 rounded-md object-cover transition-opacity duration-300 ${
                           isImageLoading.cover ? "opacity-50" : "opacity-100"
                         }`}
                         onError={(e) => {
-                          e.target.src = "/default-cover.jpg";
+                          if (
+                            e.target.src !==
+                            window.location.origin + "/default-cover.jpg"
+                          ) {
+                            e.target.src = "/default-cover.jpg";
+                          }
                         }}
                       />
+
                       {isImageLoading.cover && (
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-500"></div>

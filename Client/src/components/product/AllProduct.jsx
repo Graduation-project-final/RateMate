@@ -217,7 +217,7 @@ const AllProduct = () => {
       {/* Header */}
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold mb-3" style={{ color: navyColor }}>
-          Approved Products
+          Products
         </h1>
       </div>
 
