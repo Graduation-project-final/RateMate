@@ -48,7 +48,9 @@ const Recommendations = () => {
               <h4 className="text-lg font-semibold text-gray-800 mb-2">
                 {service.title}
               </h4>
-              <p className="text-gray-600 mb-4">{service.description}</p>
+              <p className="text-gray-600 mb-4 line-clamp-5">
+                {service.description}
+              </p>
               <div className="flex items-center justify-between">
                 <Link
                   to={`/category/${service.category}/${service.subcategory}/${service.id}`}

@@ -112,7 +112,7 @@ const ListingsGrid = ({ services = [] }) => {
         {currentListings.map((listing) => (
           <div
             key={listing.id}
-            className="bg-gray-100 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 relative"
+            className="bg-gray-100 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 relative flex flex-col h-[530px]"
           >
             <div className="relative">
               <img
@@ -141,7 +141,9 @@ const ListingsGrid = ({ services = [] }) => {
               <h2 className="text-xl font-bold text-gray-800 mb-2">
                 {listing.title}
               </h2>
-              <p className="text-gray-600 mb-4">{listing.description}</p>
+              <p className="text-gray-600 mb-4 line-clamp-6">
+                {listing.description}
+              </p>
               <div className="flex items-center justify-between">
                 <Link
                   to={`/category/${category}/${listing.subcategory}/${listing.id}`}

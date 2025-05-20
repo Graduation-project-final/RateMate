@@ -92,7 +92,7 @@ const CategorySection = () => {
         </div>
         <hr className="my-4 border-[#FADED9] border-[2px]" />
       </div>
-      <div className=" py-10 px-32">
+      <div className=" py-10 lg:px-32 px-0">
         <div className="container mx-auto px-4">
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
